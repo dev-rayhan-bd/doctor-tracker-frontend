@@ -1,16 +1,39 @@
-# Doctor Tracker – Enterprise Medical & Patient Management Portal
+# 🩺 Doctor Tracker – Enterprise Medical & Patient Management Portal
 
-## Description
-Doctor Tracker is a secure, high-performance administrative web application engineered for healthcare institutions to oversee medical specialists and manage their corresponding patient rosters with zero friction. Powered by real-time MongoDB aggregation analytics, interactive clinical data visualizations, and robust role-based authentication, the platform streamlines hospital workload distribution with instant debounced search, five-tier clinical condition filtering, and seamless doctor-patient assignment workflows.
+[![Live Web App](https://img.shields.io/badge/Live_App-Vercel-black?style=for-the-badge&logo=vercel&logoColor=white)](https://doctor-tracker-frontend-alpha.vercel.app/)
+[![Live Backend API](https://img.shields.io/badge/Live_API-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://doctor-tracker-9e9c.onrender.com/api/v1)
+[![Frontend GitHub](https://img.shields.io/badge/GitHub-Frontend_Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/dev-rayhan-bd/doctor-tracker-frontend.git)
+[![Backend GitHub](https://img.shields.io/badge/GitHub-Backend_Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/dev-rayhan-bd/doctor-tracker.git)
+[![Next.js](https://img.shields.io/badge/Next.js_16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Shadcn UI](https://img.shields.io/badge/Shadcn_UI-000000?style=for-the-badge&logo=shadcnui&logoColor=white)](https://ui.shadcn.com/)
 
 ---
 
-## Setup Guide
+## 📌 1. Description (Elevator Pitch)
+**Doctor Tracker** is a secure, high-performance administrative web application engineered for healthcare institutions to oversee medical specialists and manage their corresponding patient rosters with zero friction. Powered by real-time MongoDB aggregation analytics, interactive clinical data visualizations, and robust role-based authentication, the platform streamlines hospital workload distribution with instant debounced search, five-tier clinical condition filtering, and seamless doctor-patient assignment workflows.
+
+---
+
+## 🌐 Live Application & Endpoints
+
+| Resource | URL |
+|---|---|
+| **Live Frontend Web App** | [https://doctor-tracker-frontend-alpha.vercel.app/](https://doctor-tracker-frontend-alpha.vercel.app/) |
+| **Live Backend API Base URL** | [https://doctor-tracker-9e9c.onrender.com/api/v1](https://doctor-tracker-9e9c.onrender.com/api/v1) |
+| **Live API Documentation** | [https://doctor-tracker-9e9c.onrender.com/docs](https://doctor-tracker-9e9c.onrender.com/docs) |
+| **Frontend GitHub Repository** | [https://github.com/dev-rayhan-bd/doctor-tracker-frontend.git](https://github.com/dev-rayhan-bd/doctor-tracker-frontend.git) |
+| **Backend GitHub Repository** | [https://github.com/dev-rayhan-bd/doctor-tracker.git](https://github.com/dev-rayhan-bd/doctor-tracker.git) |
+
+---
+
+## ⚙️ 2. Setup Guide
 
 ### Prerequisites
 - **Node.js**: v18.0.0 or higher
 - **npm** (v9+) or **yarn**
-- **Backend API**: Running at `http://localhost:5001/api/v1` (from the companion `doctor-tracker` backend directory)
+- **Backend API**: Running locally at `http://localhost:5001/api/v1` or connect directly to the live Render deployment: `https://doctor-tracker-9e9c.onrender.com/api/v1`
 
 ### Step-by-Step Local Installation
 
@@ -19,7 +42,7 @@ Doctor Tracker is a secure, high-performance administrative web application engi
    cd doctor-tracker-frontend
    ```
 
-2. **Install Project Dependencies:**
+2. **Install Dependencies:**
    ```bash
    npm install
    ```
@@ -30,10 +53,11 @@ Doctor Tracker is a secure, high-performance administrative web application engi
    cp .env.example .env.local
    ```
 
-   **Default `.env.example` configurations:**
+   **Environment Configurations (`.env.local`):**
    ```env
-   # Standalone Express REST API Base URL
-   NEXT_PUBLIC_API_URL=http://localhost:5001/api/v1
+   # Standalone Express REST API Base URL (Live or Local)
+   NEXT_PUBLIC_API_URL=https://doctor-tracker-9e9c.onrender.com/api/v1
+   # For local backend: NEXT_PUBLIC_API_URL=http://localhost:5001/api/v1
 
    # Application Public URL
    NEXT_PUBLIC_APP_URL=http://localhost:3000
@@ -57,7 +81,7 @@ Doctor Tracker is a secure, high-performance administrative web application engi
 
 ---
 
-## System Architecture
+## 🏗️ 3. System Architecture
 
 Doctor Tracker is structured as a decoupled **Multi-Repository Architecture** adhering to clean separation of concerns and RESTful API design principles:
 
@@ -82,7 +106,7 @@ Doctor Tracker is structured as a decoupled **Multi-Repository Architecture** ad
                                  │
                                  ▼ HTTP REST (JSON) + Bearer Token
     ┌──────────────────────────────────────────────────────────┐
-    │          Standalone Express Backend (Port 5001)          │
+    │          Standalone Express Backend (Port 5001 / Render) │
     │         - Security: Helmet, MongoSanitize, HPP           │
     │         - Rate Limiters: Auth, Search, Global            │
     │         - Controllers: Users, Doctors, Patients, Stats   │
@@ -103,7 +127,7 @@ Doctor Tracker is structured as a decoupled **Multi-Repository Architecture** ad
 
 ---
 
-## Technical Decisions
+## 💡 4. Technical Decisions
 
 ### Decision 1: TanStack Query (React Query) over Redux Toolkit for Server State
 - **Problem:** In hospital management applications, over 85% of state management consists of remote asynchronous server data (doctor lists, patient records, dashboard KPIs). Utilizing Redux Toolkit requires hundreds of lines of boilerplate reducers, extraReducers, dispatch actions, and manual cache invalidation.
@@ -117,25 +141,67 @@ Doctor Tracker is structured as a decoupled **Multi-Repository Architecture** ad
 
 ---
 
-## Visual Evidence & UI Features
+## 📸 5. Visual Evidence (UI & Application Walkthrough)
 
-| Feature View | Key Functionalities Implemented |
-|---|---|
-| **Executive Dashboard** | Real-time KPI summary cards, Patients-per-Doctor Bar Chart, Patient Condition Donut Chart, Historical Admission Area Chart |
-| **Doctor Directory** | Search by name/hospital/specialty, status filters, pagination, Add Doctor modal, View Assigned Patients modal, Add/Remove patient directly under doctor |
-| **Patient Management** | Instant search, 5-tier clinical condition badges (Critical, Serious, Observation, Stable, Recovered), Edit Patient modal, Delete Confirmation modal |
-| **Account Settings** | Administrator profile name update, Change Password with old password validation, Clearance badge |
-| **Security Recovery** | Multi-step Forgot Password with 6-digit OTP verification, cooldown countdown timer, and password reset |
+> **Note:** Complete high-resolution screenshots and visual evidence are also documented in the backend repository [doctor-tracker README](https://github.com/dev-rayhan-bd/doctor-tracker).
+
+### 🖥️ Desktop Experience
+
+#### 1. Intelligent Healthcare Landing Page
+![Landing Page](./assets/screenshots/landing-page.png)
+
+#### 2. Secure Portal Sign In & Authentication
+<p align="center">
+  <img src="./assets/screenshots/portal-sign-in.png" width="500" alt="Portal Sign In" />
+</p>
+
+#### 3. Administrative Dashboard & Real-Time Analytics
+> Includes real-time KPI metrics (*Total Doctors: 11*, *Total Patients: 28*, *Critical Cases: 5*), Patients per Doctor load balancing bar chart, and Clinical Severity donut distribution.
+![Administrative Dashboard](./assets/screenshots/administrative-dashboard.png)
+
+#### 4. Doctors Management Directory
+> Features instant search, specialization filters, clinical hospital details, active badges, and pagination.
+![Doctors Directory](./assets/screenshots/doctors-directory.png)
+
+#### 5. Doctor Onboarding & Registration Modal
+![Register Doctor Modal](./assets/screenshots/register-doctor-modal.png)
+
+#### 6. Doctor Details & Assigned Patients Overview
+![Doctor Assigned Patients](./assets/screenshots/doctor-assigned-patients.png)
+
+#### 7. Direct Patient Assignment under Doctor
+![Add Patient under Doctor](./assets/screenshots/add-patient-form.png)
+
+#### 8. Dedicated Patient Management Page
+> Comprehensive patient tracking with clinical condition filters (*Critical*, *Serious*, *Under Observation*, *Stable*, *Recovered*), attending doctor attribution, and edit/delete actions.
+![Patient Management](./assets/screenshots/patient-management.png)
+
+#### 9. Account & Portal Settings (Profile & Password Security)
+![Account Settings](./assets/screenshots/account-settings.png)
 
 ---
 
-## Evaluation Credentials
+### 📱 Mobile Responsive Experience
 
-For local testing and evaluation:
+| Mobile Dashboard & KPIs | Mobile Doctor Onboarding | Mobile Responsive Navigation |
+| :---: | :---: | :---: |
+| <img src="./assets/screenshots/mobile-dashboard.png" width="280" alt="Mobile Dashboard" /> | <img src="./assets/screenshots/mobile-register-doctor.png" width="280" alt="Mobile Register Doctor" /> | <img src="./assets/screenshots/mobile-sidebar-nav.png" width="280" alt="Mobile Navigation" /> |
+
+---
+
+## 🔑 6. Evaluation Credentials
+
+For testing and evaluation:
 
 | Attribute | Value |
 |---|---|
-| **Portal URL** | [http://localhost:3000/login](http://localhost:3000/login) |
+| **Live Portal URL** | [https://doctor-tracker-frontend-alpha.vercel.app/login](https://doctor-tracker-frontend-alpha.vercel.app/login) |
 | **Administrator Email** | `admin@doctortracker.com` |
 | **Password** | `Admin@123456` |
 | **Role Clearance** | System Administrator |
+| **Live Backend API** | `https://doctor-tracker-9e9c.onrender.com/api/v1` |
+| **Live API Docs** | [https://doctor-tracker-9e9c.onrender.com/docs](https://doctor-tracker-9e9c.onrender.com/docs) |
+
+---
+
+*Doctor Tracker Portal &copy; 2026. Built with modern full-stack web engineering best practices.*
