@@ -1,17 +1,25 @@
+export type DoctorStatus = 'ACTIVE' | 'INACTIVE';
+
 export interface Doctor {
   _id: string;
-  userId: string;
   name: string;
-  email: string;
   specialization: string;
-  qualification: string;
-  experienceYears: number;
-  consultationFee: number;
-  availableDays: string[];
-  bio?: string;
-  isAvailable: boolean;
-  avatar?: string;
+  hospital: string;
+  phone: string;
+  email: string;
+  status: DoctorStatus;
+  patientCount?: number;
   createdAt?: string;
   updatedAt?: string;
 }
 
+export interface CreateDoctorInput {
+  name: string;
+  specialization: string;
+  hospital: string;
+  phone: string;
+  email: string;
+  status?: DoctorStatus;
+}
+
+export type UpdateDoctorInput = Partial<CreateDoctorInput>;

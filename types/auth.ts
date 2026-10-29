@@ -1,25 +1,30 @@
-import { UserRole } from '@/config/site';
+export type UserRole =
+  | 'SUPER_ADMIN'
+  | 'ADMIN'
+  | 'DOCTOR'
+  | 'USER'
+  | 'PLAYER'
+  | 'COACH'
+  | 'GUARDIAN'
+  | 'SCOUT';
+
+export type UserStatus = 'ACTIVE' | 'INACTIVE' | 'BLOCKED';
 
 export interface User {
   _id: string;
   name: string;
   email: string;
   role: UserRole;
-  isVerified: boolean;
-  avatar?: string;
+  status: UserStatus;
+  isEmailVerified: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
 
-export interface AuthTokens {
-  accessToken: string;
-  refreshToken?: string;
-}
-
 export interface LoginResponseData {
   user: User;
-  token: string;
-  refreshToken?: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface AuthSession {
@@ -27,4 +32,3 @@ export interface AuthSession {
   isAuthenticated: boolean;
   role?: UserRole;
 }
-

@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 import { authService } from '../services/auth.service';
 import { LoginFormData, RegisterFormData } from '../schemas/auth.schema';
 import { getAuthToken } from '@/lib/auth/token';
+import { User } from '@/types/auth';
 
 export const AUTH_KEYS = {
   me: ['auth', 'me'] as const,
@@ -25,6 +26,7 @@ export function useAuth() {
     queryFn: authService.getMe,
     enabled: hasToken,
     retry: false,
+    staleTime: 5 * 60 * 1000,
   });
 
   const loginMutation = useMutation({
@@ -32,9 +34,7 @@ export function useAuth() {
     onSuccess: (data) => {
       toast.success('Logged in successfully!');
       queryClient.setQueryData(AUTH_KEYS.me, data.user);
-      
-      const role = data.user.role?.toLowerCase() || 'patient';
-      router.push(`/dashboard/${role}`);
+      router.push('/dashboard');
     },
     onError: (error: Error) => {
       toast.error(error.message || 'Login failed');
@@ -52,6 +52,23 @@ export function useAuth() {
     },
   });
 
+  const updateProfileMutation = useMutation({
+    mutationFn: ({ id, name }: { id: string; name: string }) =>
+      authService.updateProfile(id, { name }),
+    onSuccess: (updatedUser) => {
+      toast.success('Administrator profile updated successfully');
+      // Immediately update queryClient cache so all UI components update instantly without reload!
+      queryClient.setQueryData(AUTH_KEYS.me, (old: User | undefined) => {
+        if (!old) return updatedUser;
+        return { ...old, ...updatedUser };
+      });
+      queryClient.invalidateQueries({ queryKey: AUTH_KEYS.me });
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to update profile');
+    },
+  });
+
   const logout = () => {
     queryClient.clear();
     authService.logout();
@@ -66,7 +83,8 @@ export function useAuth() {
     isLoggingIn: loginMutation.isPending,
     register: registerMutation.mutate,
     isRegistering: registerMutation.isPending,
+    updateProfile: updateProfileMutation.mutateAsync,
+    isUpdatingProfile: updateProfileMutation.isPending,
     logout,
   };
 }
-
